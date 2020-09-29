@@ -1,4 +1,4 @@
-package ru.sbt.mipt.oop;
+package ru.sbt.mipt.oop.home_components;
 
 public class Light {
     private boolean isOn;
@@ -21,3 +21,4 @@ public class Light {
         isOn = on;
     }
 }
+
