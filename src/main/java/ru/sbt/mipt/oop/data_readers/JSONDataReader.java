@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 public class JSONDataReader {
     private String jsonStr;
 
-    public JSONDataReader(){
+    public JSONDataReader() {
         jsonStr = "";
     }
 
@@ -15,13 +15,11 @@ public class JSONDataReader {
         jsonStr = new String(Files.readAllBytes(Paths.get(addr)));
     }
 
-    public String getData(){
+    public String getData() {
         return jsonStr;
     }
 
     public void writeData(String addr) throws IOException {
         jsonStr = new String(Files.readAllBytes(Paths.get(addr)));
     }
-
 }
-

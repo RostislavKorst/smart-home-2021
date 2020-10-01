@@ -21,4 +21,3 @@ public class Light {
         isOn = on;
     }
 }
-
