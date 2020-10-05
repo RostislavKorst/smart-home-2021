@@ -1,6 +1,6 @@
 package ru.sbt.mipt.oop;
 
-import ru.sbt.mipt.oop.home_components.SmartHome;
+import ru.sbt.mipt.oop.home.components.SmartHome;
 import ru.sbt.mipt.oop.processors.Processor;
 
 import java.util.List;

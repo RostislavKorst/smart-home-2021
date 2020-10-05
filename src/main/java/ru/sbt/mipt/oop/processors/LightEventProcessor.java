@@ -2,17 +2,18 @@ package ru.sbt.mipt.oop.processors;
 
 import ru.sbt.mipt.oop.command_senders.CommandSender;
 import ru.sbt.mipt.oop.SensorEvent;
-import ru.sbt.mipt.oop.home_components.*;
+import ru.sbt.mipt.oop.home.components.*;
 
 import static ru.sbt.mipt.oop.SensorEventType.LIGHT_OFF;
 import static ru.sbt.mipt.oop.SensorEventType.LIGHT_ON;
 
 public class LightEventProcessor implements Processor {
     private final SmartHome smartHome;
-    private final CommandSender commandSender = new CommandSender();
+    private final CommandSender commandSender;
 
-    public LightEventProcessor(SmartHome smartHome) {
+    public LightEventProcessor(SmartHome smartHome, CommandSender commandSender) {
         this.smartHome = smartHome;
+        this.commandSender = commandSender;
     }
 
     private boolean isLight(SensorEvent event) {

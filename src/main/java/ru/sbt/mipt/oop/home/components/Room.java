@@ -1,4 +1,4 @@
-package ru.sbt.mipt.oop.home_components;
+package ru.sbt.mipt.oop.home.components;
 
 import java.util.Collection;
 

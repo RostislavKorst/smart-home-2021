@@ -4,18 +4,19 @@ import ru.sbt.mipt.oop.command_senders.CommandSender;
 import ru.sbt.mipt.oop.CommandType;
 import ru.sbt.mipt.oop.SensorCommand;
 import ru.sbt.mipt.oop.SensorEvent;
-import ru.sbt.mipt.oop.home_components.SmartHome;
-import ru.sbt.mipt.oop.home_components.*;
+import ru.sbt.mipt.oop.home.components.SmartHome;
+import ru.sbt.mipt.oop.home.components.*;
 
 import static ru.sbt.mipt.oop.SensorEventType.DOOR_CLOSED;
 import static ru.sbt.mipt.oop.SensorEventType.DOOR_OPEN;
 
 public class DoorEventProcessor implements Processor {
     private final SmartHome smartHome;
-    private final CommandSender commandSender = new CommandSender();
+    private final CommandSender commandSender;
 
-    public DoorEventProcessor(SmartHome smartHome) {
+    public DoorEventProcessor(SmartHome smartHome, CommandSender commandSender) {
         this.smartHome = smartHome;
+        this.commandSender = commandSender;
     }
 
     private boolean isDoor(SensorEvent event) {
@@ -41,7 +42,7 @@ public class DoorEventProcessor implements Processor {
                                     for (Light light : homeRoom.getLights()) {
                                         light.setOn(false);
                                         SensorCommand command = new SensorCommand(CommandType.LIGHT_OFF, light.getId());
-                                        CommandSender.sendCommand(command);
+                                        commandSender.sendCommand(command);
                                     }
                                 }
                             }
