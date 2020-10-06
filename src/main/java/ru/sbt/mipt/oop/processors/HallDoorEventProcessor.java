@@ -23,36 +23,30 @@ public class HallDoorEventProcessor implements Processor {
         return event.getType() == DOOR_OPEN || event.getType() == DOOR_CLOSED;
     }
 
-    private boolean isHallDoor(SensorEvent event) {
-        for (Room room : smartHome.getRooms()) {
-            for (Door door : room.getDoors()) {
-                if (door.getId().equals(event.getObjectId())) {
-                    if (room.getName().equals("hall")) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
     @Override
     public void processing(SensorEvent event) {
-        if (isDoor(event) && isHallDoor(event)) {
-            if (event.getType() == DOOR_CLOSED) {
-                for (Room room : smartHome.getRooms()) {
+        if (isDoor(event)) {
+            smartHome.execute(object -> {
+                if (event.getType() == DOOR_CLOSED && object instanceof Room) {
+                    Room room = (Room) object;
                     if (room.getName().equals("hall")) {
-                        for (Room homeRoom : smartHome.getRooms()) {
-                            for (Light light : homeRoom.getLights()) {
-                                light.setOn(false);
-                                SensorCommand command = new SensorCommand(CommandType.LIGHT_OFF, light.getId());
-                                commandSender.sendCommand(command);
+                        room.execute(doorInstance -> {
+                            if (doorInstance instanceof Door) {
+                                Door door = (Door) doorInstance;
+                                if (door.getId().equals((event.getObjectId()))) {
+                                    smartHome.execute(homeInstance -> {
+                                        if (homeInstance instanceof Light) {
+                                            Light light = (Light) homeInstance;
+                                            light.setOn(false);
+                                            System.out.println("Light " + light.getId() + " was turned off.");
+                                        }
+                                    });
+                                }
                             }
-                        }
+                        });
                     }
                 }
-            }
-
+            });
         }
     }
 }
