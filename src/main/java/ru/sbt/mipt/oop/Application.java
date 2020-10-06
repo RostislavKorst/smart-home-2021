@@ -3,7 +3,7 @@ package ru.sbt.mipt.oop;
 import java.util.Arrays;
 import java.util.List;
 
-import ru.sbt.mipt.oop.command_senders.PretendingCommandSender;
+import ru.sbt.mipt.oop.command.senders.PretendingCommandSender;
 import ru.sbt.mipt.oop.data.generators.DataGenerator;
 import ru.sbt.mipt.oop.data.generators.DummyRandomDataGenerator;
 import ru.sbt.mipt.oop.data.loaders.HomeLoader;

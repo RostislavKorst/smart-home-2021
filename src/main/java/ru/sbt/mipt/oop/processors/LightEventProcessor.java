@@ -1,6 +1,6 @@
 package ru.sbt.mipt.oop.processors;
 
-import ru.sbt.mipt.oop.command_senders.CommandSender;
+import ru.sbt.mipt.oop.command.senders.CommandSender;
 import ru.sbt.mipt.oop.SensorEvent;
 import ru.sbt.mipt.oop.home.components.*;
 
