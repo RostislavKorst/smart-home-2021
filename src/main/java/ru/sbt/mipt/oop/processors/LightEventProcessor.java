@@ -23,19 +23,21 @@ public class LightEventProcessor implements Processor {
     @Override
     public void processing(SensorEvent event) {
         if (isLight(event)) {
-            for (Room room : smartHome.getRooms()) {
-                for (Light light : room.getLights()) {
-                    if (light.getId().equals(event.getObjectId())) {
-                        if (event.getType() == LIGHT_ON) {
+            smartHome.execute(object -> {
+                if (object instanceof Light) {
+                    Light light = (Light) object;
+                    if (event.getObjectId().equals(light.getId())) {
+                        if ( event.getType() == LIGHT_ON) {
                             light.setOn(true);
-                            System.out.println("Light " + light.getId() + " in room " + room.getName() + " was turned on.");
-                        } else {
+                            System.out.println("Light " + light.getId() + " was turned on.");
+                        }
+                        else {
                             light.setOn(false);
-                            System.out.println("Light " + light.getId() + " in room " + room.getName() + " was turned off.");
+                            System.out.println("Light " + light.getId() + " was turned off.");
                         }
                     }
                 }
-            }
+            });
         }
     }
 }

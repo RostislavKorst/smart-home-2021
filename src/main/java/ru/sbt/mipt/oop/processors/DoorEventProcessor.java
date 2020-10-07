@@ -24,19 +24,20 @@ public class DoorEventProcessor implements Processor {
     @Override
     public void processing(SensorEvent event) {
         if (isDoor(event)) {
-            for (Room room : smartHome.getRooms()) {
-                for (Door door : room.getDoors()) {
+            smartHome.execute(object -> {
+                if (object instanceof Door) {
+                    Door door = (Door) object;
                     if (door.getId().equals(event.getObjectId())) {
                         if (event.getType() == DOOR_OPEN) {
                             door.setOpen(true);
-                            System.out.println("Door " + door.getId() + " in room " + room.getName() + " was opened.");
+                            System.out.println("Door " + door.getId() + " was opened.");
                         } else {
                             door.setOpen(false);
-                            System.out.println("Door " + door.getId() + " in room " + room.getName() + " was closed.");
+                            System.out.println("Door " + door.getId() + " was closed.");
                         }
                     }
                 }
-            }
+            });
         }
     }
 }

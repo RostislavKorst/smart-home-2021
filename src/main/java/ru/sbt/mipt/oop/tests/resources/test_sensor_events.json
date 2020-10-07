@@ -1,0 +1,58 @@
+[
+  {
+    "type": "DOOR_CLOSED",
+    "objectId": "1"
+  },
+  {
+    "type": "DOOR_OPEN",
+    "objectId": "1"
+  },
+  {
+    "type": "DOOR_CLOSED",
+    "objectId": "2"
+  },
+  {
+    "type": "DOOR_OPEN",
+    "objectId": "2"
+  },
+  {
+    "type": "LIGHT_ON",
+    "objectId": "1"
+  },
+  {
+    "type": "LIGHT_ON",
+    "objectId": "2"
+  },
+  {
+    "type": "LIGHT_ON",
+    "objectId": "3"
+  },
+  {
+    "type": "LIGHT_OFF",
+    "objectId": "1"
+  },
+  {
+    "type": "LIGHT_OFF",
+    "objectId": "2"
+  },
+  {
+    "type": "LIGHT_OFF",
+    "objectId": "3"
+  },
+  {
+    "type": "LIGHT_OFF",
+    "objectId": "1"
+  },
+  {
+    "type": "LIGHT_OFF",
+    "objectId": "2"
+  },
+  {
+    "type": "LIGHT_OFF",
+    "objectId": "3"
+  },
+  {
+    "type": "LIGHT_OFF",
+    "objectId": "4"
+  }
+]
