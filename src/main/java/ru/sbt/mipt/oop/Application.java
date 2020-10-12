@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import ru.sbt.mipt.oop.alarm.Alarm;
+import ru.sbt.mipt.oop.command.senders.CommandSender;
 import ru.sbt.mipt.oop.command.senders.PretendingCommandSender;
 import ru.sbt.mipt.oop.data.generators.DataGenerator;
 import ru.sbt.mipt.oop.data.generators.DummyRandomDataGenerator;
@@ -37,14 +38,15 @@ public class Application {
         SmartHome smartHome = homeLoader.loadHome();
         Alarm alarm = new Alarm(12345);
         smartHome.setAlarm(alarm);
+        CommandSender commandSender = new PretendingCommandSender();
         List<Processor> eventProcessors = Arrays.asList(
-                new SecurityProcessorDecorator(new LightEventProcessor(smartHome, new PretendingCommandSender()),
+                new SecurityProcessorDecorator(new LightEventProcessor(smartHome, commandSender),
                         messageSender),
-                new SecurityProcessorDecorator(new DoorEventProcessor(smartHome, new PretendingCommandSender()),
+                new SecurityProcessorDecorator(new DoorEventProcessor(smartHome, commandSender),
                         messageSender),
-                new SecurityProcessorDecorator(new HallDoorEventProcessor(smartHome, new PretendingCommandSender()),
+                new SecurityProcessorDecorator(new HallDoorEventProcessor(smartHome, commandSender),
                         messageSender),
-                new AlarmEventProcessor(smartHome, new PretendingCommandSender()));
+                new AlarmEventProcessor(smartHome, commandSender));
         SmartHomeHandler smartHomeHandler = new SmartHomeHandler(smartHome, eventProcessors, dataGenerator);
         smartHomeHandler.runCycleForEvent();
     }

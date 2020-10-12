@@ -20,10 +20,6 @@ public class SmartHome implements Actionable {
         this.rooms = rooms;
     }
 
-    public Collection<Room> getRooms() {
-        return rooms;
-    }
-
     public void setAlarm(Alarm alarm) {
         this.alarm = alarm;
     }
@@ -38,6 +34,7 @@ public class SmartHome implements Actionable {
 
     @Override
     public void execute(Action action) {
+        action.execute(this);
         rooms.forEach(room->room.execute(action));
     }
 
