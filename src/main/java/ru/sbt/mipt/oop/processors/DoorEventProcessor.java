@@ -40,4 +40,9 @@ public class DoorEventProcessor implements Processor {
             });
         }
     }
+
+    @Override
+    public SmartHome getHome() {
+        return smartHome;
+    }
 }

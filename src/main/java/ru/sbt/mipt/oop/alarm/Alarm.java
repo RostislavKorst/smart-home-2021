@@ -18,10 +18,6 @@ public class Alarm {
         return this.code == code;
     }
 
-    public AlarmState getAlarmState() {
-        return this.alarmState;
-    }
-
     public void activate(int codeInput) {
         alarmState.activate(codeInput);
     }
@@ -101,13 +97,17 @@ public class Alarm {
     private class TriggerState implements AlarmState {
         @Override
         public void activate(int codeInput) {
-            setAlarmState(new ActiveState());
-            System.out.println("Alarm was activated");
+            System.out.println("Alarm was triggered, you can not activate it");
         }
 
         @Override
         public void deactivate(int codeInput) {
-            System.out.println("Alarm was triggered, you can not deactivate it");
+            if (isCorrectCode(codeInput)) {
+                setAlarmState(new InactiveState());
+                System.out.println("Alarm was deactivated");
+            } else {
+                System.out.println("Wrong code!");
+            }
         }
 
         @Override

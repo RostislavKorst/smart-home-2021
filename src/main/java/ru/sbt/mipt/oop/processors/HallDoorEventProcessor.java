@@ -49,4 +49,9 @@ public class HallDoorEventProcessor implements Processor {
             });
         }
     }
+
+    @Override
+    public SmartHome getHome() {
+        return smartHome;
+    }
 }

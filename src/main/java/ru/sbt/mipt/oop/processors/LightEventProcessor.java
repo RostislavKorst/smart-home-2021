@@ -40,4 +40,9 @@ public class LightEventProcessor implements Processor {
             });
         }
     }
+
+    @Override
+    public SmartHome getHome() {
+        return smartHome;
+    }
 }
