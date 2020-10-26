@@ -1,4 +1,4 @@
-package ru.sbt.mipt.oop.processors;
+package ru.sbt.mipt.oop.event.processors;
 
 import ru.sbt.mipt.oop.command.senders.CommandSender;
 import ru.sbt.mipt.oop.SensorEvent;
@@ -7,7 +7,7 @@ import ru.sbt.mipt.oop.home.components.*;
 import static ru.sbt.mipt.oop.SensorEventType.LIGHT_OFF;
 import static ru.sbt.mipt.oop.SensorEventType.LIGHT_ON;
 
-public class LightEventProcessor implements Processor {
+public class LightEventProcessor implements SensorEventProcessor {
     private final SmartHome smartHome;
     private final CommandSender commandSender;
 
@@ -21,7 +21,7 @@ public class LightEventProcessor implements Processor {
     }
 
     @Override
-    public void processing(SensorEvent event) {
+    public void process(SensorEvent event) {
         if (isLight(event)) {
             smartHome.execute(object -> {
                 if (object instanceof Light) {
@@ -39,10 +39,5 @@ public class LightEventProcessor implements Processor {
                 }
             });
         }
-    }
-
-    @Override
-    public SmartHome getHome() {
-        return smartHome;
     }
 }

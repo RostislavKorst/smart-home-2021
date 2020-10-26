@@ -14,7 +14,7 @@ public class Alarm {
         this.alarmState = new InactiveState();
     }
 
-    public boolean isCorrectCode(int code) {
+    private boolean isCorrectCode(int code) {
         return this.code == code;
     }
 
@@ -31,7 +31,7 @@ public class Alarm {
     }
 
     public boolean isActivated() {
-        return this.alarmState instanceof ActiveState;
+        return this.alarmState instanceof ActiveState || this.alarmState instanceof TriggerState;
     }
 
     public boolean isDeactivated() {

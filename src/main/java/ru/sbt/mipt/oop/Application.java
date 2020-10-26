@@ -9,11 +9,11 @@ import ru.sbt.mipt.oop.command.senders.PretendingCommandSender;
 import ru.sbt.mipt.oop.data.generators.DataGenerator;
 import ru.sbt.mipt.oop.data.generators.DummyRandomDataGenerator;
 import ru.sbt.mipt.oop.data.loaders.HomeLoader;
+import ru.sbt.mipt.oop.event.processors.*;
 import ru.sbt.mipt.oop.home.components.SmartHome;
 import ru.sbt.mipt.oop.data.loaders.*;
 import ru.sbt.mipt.oop.message.senders.MessageSender;
 import ru.sbt.mipt.oop.message.senders.SMSMessageSender;
-import ru.sbt.mipt.oop.processors.*;
 
 public class Application {
     private final HomeLoader homeLoader;
@@ -39,13 +39,13 @@ public class Application {
         Alarm alarm = new Alarm(12345);
         smartHome.setAlarm(alarm);
         CommandSender commandSender = new PretendingCommandSender();
-        List<Processor> eventProcessors = Arrays.asList(
+        List<SensorEventProcessor> eventProcessors = Arrays.asList(
                 new SecurityProcessorDecorator(new LightEventProcessor(smartHome, commandSender),
-                        messageSender),
+                        messageSender, smartHome),
                 new SecurityProcessorDecorator(new DoorEventProcessor(smartHome, commandSender),
-                        messageSender),
+                        messageSender, smartHome),
                 new SecurityProcessorDecorator(new HallDoorEventProcessor(smartHome, commandSender),
-                        messageSender),
+                        messageSender, smartHome),
                 new AlarmEventProcessor(smartHome, commandSender));
         SmartHomeHandler smartHomeHandler = new SmartHomeHandler(smartHome, eventProcessors, dataGenerator);
         smartHomeHandler.runCycleForEvent();

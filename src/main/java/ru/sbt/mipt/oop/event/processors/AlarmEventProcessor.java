@@ -1,11 +1,11 @@
-package ru.sbt.mipt.oop.processors;
+package ru.sbt.mipt.oop.event.processors;
 
 import ru.sbt.mipt.oop.SensorEvent;
 import ru.sbt.mipt.oop.SensorEventType;
 import ru.sbt.mipt.oop.command.senders.CommandSender;
 import ru.sbt.mipt.oop.home.components.SmartHome;
 
-public class AlarmEventProcessor implements Processor {
+public class AlarmEventProcessor implements SensorEventProcessor {
     private final SmartHome smartHome;
     private final CommandSender commandSender;
 
@@ -15,7 +15,7 @@ public class AlarmEventProcessor implements Processor {
     }
 
     @Override
-    public void processing(SensorEvent event) {
+    public void process(SensorEvent event) {
         if (event.getType() == SensorEventType.ALARM_ACTIVATE) {
             smartHome.getAlarm().activate(event.getCode());
         }
@@ -23,10 +23,5 @@ public class AlarmEventProcessor implements Processor {
         if (event.getType() == SensorEventType.ALARM_DEACTIVATE) {
             smartHome.getAlarm().deactivate(event.getCode());
         }
-    }
-
-    @Override
-    public SmartHome getHome() {
-        return smartHome;
     }
 }

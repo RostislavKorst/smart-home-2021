@@ -1,8 +1,6 @@
-package ru.sbt.mipt.oop.processors;
+package ru.sbt.mipt.oop.event.processors;
 
 import ru.sbt.mipt.oop.command.senders.CommandSender;
-import ru.sbt.mipt.oop.CommandType;
-import ru.sbt.mipt.oop.SensorCommand;
 import ru.sbt.mipt.oop.SensorEvent;
 import ru.sbt.mipt.oop.home.components.SmartHome;
 import ru.sbt.mipt.oop.home.components.*;
@@ -10,7 +8,7 @@ import ru.sbt.mipt.oop.home.components.*;
 import static ru.sbt.mipt.oop.SensorEventType.DOOR_CLOSED;
 import static ru.sbt.mipt.oop.SensorEventType.DOOR_OPEN;
 
-public class HallDoorEventProcessor implements Processor {
+public class HallDoorEventProcessor implements SensorEventProcessor {
     private final SmartHome smartHome;
     private final CommandSender commandSender;
 
@@ -24,7 +22,7 @@ public class HallDoorEventProcessor implements Processor {
     }
 
     @Override
-    public void processing(SensorEvent event) {
+    public void process(SensorEvent event) {
         if (isDoor(event)) {
             smartHome.execute(object -> {
                 if (event.getType() == DOOR_CLOSED && object instanceof Room) {
@@ -48,10 +46,5 @@ public class HallDoorEventProcessor implements Processor {
                 }
             });
         }
-    }
-
-    @Override
-    public SmartHome getHome() {
-        return smartHome;
     }
 }

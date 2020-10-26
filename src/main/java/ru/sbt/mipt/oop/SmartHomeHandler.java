@@ -2,18 +2,18 @@ package ru.sbt.mipt.oop;
 
 import ru.sbt.mipt.oop.data.generators.DataGenerator;
 import ru.sbt.mipt.oop.home.components.SmartHome;
-import ru.sbt.mipt.oop.processors.Processor;
+import ru.sbt.mipt.oop.event.processors.SensorEventProcessor;
 
 import java.util.List;
 
 public class SmartHomeHandler {
     private final SmartHome smartHome;
-    private final List<Processor> processors;
+    private final List<SensorEventProcessor> sensorEventProcessors;
     private final DataGenerator dataGenerator;
 
-    public SmartHomeHandler(SmartHome smartHome, List<Processor> processors, DataGenerator dataGenerator) {
+    public SmartHomeHandler(SmartHome smartHome, List<SensorEventProcessor> sensorEventProcessors, DataGenerator dataGenerator) {
         this.smartHome = smartHome;
-        this.processors = processors;
+        this.sensorEventProcessors = sensorEventProcessors;
         this.dataGenerator = dataGenerator;
     }
 
@@ -21,8 +21,8 @@ public class SmartHomeHandler {
         SensorEvent event = dataGenerator.getNextSensorEvent();
         while (event != null) {
             System.out.println("Got event: " + event);
-            for (Processor processor : processors) {
-                processor.processing(event);
+            for (SensorEventProcessor sensorEventProcessor : sensorEventProcessors) {
+                sensorEventProcessor.process(event);
             }
             event = dataGenerator.getNextSensorEvent();
         }

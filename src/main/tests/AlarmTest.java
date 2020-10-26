@@ -1,4 +1,4 @@
-package ru.sbt.mipt.oop.tests;
+package tests;
 
 import org.junit.Test;
 import ru.sbt.mipt.oop.alarm.Alarm;
