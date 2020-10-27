@@ -26,10 +26,13 @@ public class SecurityProcessorDecorator implements SensorEventProcessor {
     public void process(SensorEvent event) {
         if (isAlarmEvent(event)) return;
         Alarm alarm = smartHome.getAlarm();
-        wrappeeProcessor.process(event);
-        if (alarm != null && alarm.isActivated()) {
+        if (alarm == null) return;
+        if (alarm.isDeactivated()) {
+            wrappeeProcessor.process(event);
+        } else if (alarm.isActivated()) {
             alarm.trigger();
             System.out.println("Sensor detection while alarm is on. Alarm was triggered!");
+        } else {
             messageSender.send("Sending sms");
         }
     }

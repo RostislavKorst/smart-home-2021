@@ -31,7 +31,7 @@ public class Alarm {
     }
 
     public boolean isActivated() {
-        return this.alarmState instanceof ActiveState || this.alarmState instanceof TriggerState;
+        return this.alarmState instanceof ActiveState;
     }
 
     public boolean isDeactivated() {
