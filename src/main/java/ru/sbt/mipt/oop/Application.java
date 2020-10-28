@@ -1,53 +1,13 @@
 package ru.sbt.mipt.oop;
 
-import java.util.Arrays;
-import java.util.List;
-
-import ru.sbt.mipt.oop.alarm.Alarm;
-import ru.sbt.mipt.oop.command.senders.CommandSender;
-import ru.sbt.mipt.oop.command.senders.PretendingCommandSender;
-import ru.sbt.mipt.oop.data.generators.DataGenerator;
-import ru.sbt.mipt.oop.data.generators.DummyRandomDataGenerator;
-import ru.sbt.mipt.oop.data.loaders.HomeLoader;
-import ru.sbt.mipt.oop.event.processors.*;
-import ru.sbt.mipt.oop.home.components.SmartHome;
-import ru.sbt.mipt.oop.data.loaders.*;
-import ru.sbt.mipt.oop.message.senders.MessageSender;
-import ru.sbt.mipt.oop.message.senders.SMSMessageSender;
+import com.coolcompany.smarthome.events.SensorEventsManager;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
 
 public class Application {
-    private final HomeLoader homeLoader;
-    private final DataGenerator dataGenerator;
-    private final MessageSender messageSender;
-
-    public Application(HomeLoader homeLoader, DataGenerator dataGenerator, MessageSender messageSender) {
-        this.homeLoader = homeLoader;
-        this.dataGenerator = dataGenerator;
-        this.messageSender = messageSender;
-    }
-
-    public static void main(String... args) {
-        HomeLoader homeLoader = new JSONHomeLoader("smart-home-1.js");
-        DataGenerator dataGenerator = new DummyRandomDataGenerator();
-        MessageSender messageSender = new SMSMessageSender();
-        Application application = new Application(homeLoader, dataGenerator, messageSender);
-        application.run();
-    }
-
-    public void run() {
-        SmartHome smartHome = homeLoader.loadHome();
-        Alarm alarm = new Alarm(12345);
-        smartHome.setAlarm(alarm);
-        CommandSender commandSender = new PretendingCommandSender();
-        List<SensorEventProcessor> eventProcessors = Arrays.asList(
-                new SecurityProcessorDecorator(new LightEventProcessor(smartHome, commandSender),
-                        messageSender, smartHome),
-                new SecurityProcessorDecorator(new DoorEventProcessor(smartHome, commandSender),
-                        messageSender, smartHome),
-                new SecurityProcessorDecorator(new HallDoorEventProcessor(smartHome, commandSender),
-                        messageSender, smartHome),
-                new AlarmEventProcessor(smartHome, commandSender));
-        SmartHomeHandler smartHomeHandler = new SmartHomeHandler(smartHome, eventProcessors, dataGenerator);
-        smartHomeHandler.runCycleForEvent();
+    public static void main(String[] args) {
+        AbstractApplicationContext context = new AnnotationConfigApplicationContext(SpringConfiguration.class);
+        SensorEventsManager sensorEventsManager = context.getBean(SensorEventsManager.class);
+        sensorEventsManager.start();
     }
 }
