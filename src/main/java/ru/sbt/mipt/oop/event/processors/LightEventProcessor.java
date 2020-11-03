@@ -27,11 +27,10 @@ public class LightEventProcessor implements SensorEventProcessor {
                 if (object instanceof Light) {
                     Light light = (Light) object;
                     if (event.getObjectId().equals(light.getId())) {
-                        if ( event.getType() == LIGHT_ON) {
+                        if (event.getType() == LIGHT_ON) {
                             light.setOn(true);
                             System.out.println("Light " + light.getId() + " was turned on.");
-                        }
-                        else {
+                        } else {
                             light.setOn(false);
                             System.out.println("Light " + light.getId() + " was turned off.");
                         }

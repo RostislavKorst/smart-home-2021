@@ -1,0 +1,23 @@
+{
+  "rooms": [
+    {
+      "lights": [
+        {
+          "isOn": true,
+          "id": "1"
+        },
+        {
+          "isOn": true,
+          "id": "2"
+        }
+      ],
+      "doors": [
+        {
+          "id": "1",
+          "isOpen": true
+        }
+      ],
+      "name": "hall"
+    }
+  ]
+}
